@@ -26,6 +26,15 @@ CONFIG.NEW_PLAYER          = {
 
 CONFIG.DELETE_ITEM_EXPIRED = false -- if true items on use that are expired will be deleted (only works for items with degradation)
 
+CONFIG.AUTO_ACCEPT_ITEMS_BY_DEFAULT = false -- Default behavior when giving standard items where true will accept automatically OR false will prompt the recipient
+CONFIG.AUTO_ACCEPT_ITEMS_EXEPTION = {       -- Exeption to the default behavior can be added
+    ["recipe_item"] = {
+        ["police"] = true,                  -- Item exeption for specifics sender jobs
+        ["doctor"] = true,
+    },
+    ["recipe_book"] = true                  -- Item exeption for all sender jobs
+}
+
 CONFIG.PICKUPS             = {
 
     USE_TIMER = false,      -- if true it will add timer to delete pickups

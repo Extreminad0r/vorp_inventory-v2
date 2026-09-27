@@ -563,7 +563,17 @@ local InventoryService <const> = {
 				return SV_UTILS.PROCESS.REMOVE_USER(_source)
 			end
 
-			if not INVENTORY_SERVICE.GIVE.ASK_TO_GIVE_ITEMS(_source, target, { type = "item_standard", itemName = itemName, itemCount = amount }) then
+			local auto_accept_item = CONFIG.AUTO_ACCEPT_ITEMS_BY_DEFAULT
+			local auto_accept_item_check <const> = CONFIG.AUTO_ACCEPT_ITEMS_EXEPTION[itemName]
+			if auto_accept_item_check then
+				if type(auto_accept_item_check) == "table" and auto_accept_item_check[character.job] then
+					auto_accept_item = not CONFIG.AUTO_ACCEPT_ITEMS_BY_DEFAULT
+				elseif type(auto_accept_item_check) == "boolean" then
+					auto_accept_item = not CONFIG.AUTO_ACCEPT_ITEMS_BY_DEFAULT
+				end
+			end
+
+			if not auto_accept_item and not INVENTORY_SERVICE.GIVE.ASK_TO_GIVE_ITEMS(_source, target, { type = "item_standard", itemName = itemName, itemCount = amount }) then
 				CORE.NotifyRightTip(_source, LANG.playerRejectedRequest, 5000)
 				return SV_UTILS.PROCESS.REMOVE_USER(_source)
 			end
